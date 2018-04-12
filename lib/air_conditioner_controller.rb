@@ -15,13 +15,8 @@ class AirConditionerController
     # 載入紅外線模組
     require 'ir'
     ir = IR.new
-
-    # 設定指令 -> 「確認冷氣是否開啟」
-    @order = 'check_is_opened'
-    # 呼叫紅外線發射器
-    @launcher = ir
-    # 發送指令給冷氣機，要求冷氣機回報「開啟狀態」
-    isopen = @air_conditioner.receiver(@order)
+    # 確認冷氣是否已經開啟，要求冷氣機回報「開啟狀態」
+    isopen = check_if_ac_open?(ir)
 
     # if 開啟狀態 == 冷氣沒開
     if isopen == false
@@ -41,5 +36,16 @@ class AirConditionerController
         @dashboard[:status] = 'off'
       end
     end
+  end
+
+  private
+
+  def check_if_ac_open?(ir)
+    # 設定指令 -> 「確認冷氣是否開啟」
+    @order = 'check_is_opened'
+    # 呼叫紅外線發射器
+    @launcher = ir
+    # 發送指令給冷氣機
+    @air_conditioner.receiver(@order)
   end
 end
