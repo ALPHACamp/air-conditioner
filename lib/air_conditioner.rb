@@ -38,4 +38,14 @@ class AirConditioner
       return 'unknown order'
     end
   end
+
+  # 確認冷氣是否已經開啟
+  def open?(ir)
+    # 設定指令 -> 「確認冷氣是否開啟」
+    @order = 'check_is_opened'
+    # 呼叫紅外線發射器
+    @launcher = ir
+    # 發送指令給冷氣機
+    self.receiver(@order)
+  end
 end
