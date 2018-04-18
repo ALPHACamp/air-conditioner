@@ -29,4 +29,15 @@ RSpec.describe AirConditionerController, "acc" do
     # 預期(冷氣狀態) == 運作中
     expect(@ac.isopen).to eq(true)
   end
+
+  it "should status in dashboard correct" do
+    # 設定「冷氣開啟狀態」 -> 關機
+    @ac.isopen = false
+    # 設定「冷氣開啟狀態」 -> 有插電
+    @ac.ispower = true
+    # 冷氣遙控器.打開冷氣()
+    @acc.open
+    # 預期(冷氣遙控器儀表板) 有 "on" 的訊息
+    expect(@acc.print_dashboard).to include(:status => "on")
+  end
 end
