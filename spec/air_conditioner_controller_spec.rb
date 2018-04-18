@@ -18,4 +18,15 @@ RSpec.describe AirConditionerController, "acc" do
     # 期待感覺到到冷氣出風口開始出風
     expect(@ac.outlet_status).to eq('wind~~~')
   end
+
+  it "should controller open work" do
+    # 設定「冷氣開啟狀態」 -> 關機
+    @ac.isopen = false
+    # 設定「冷氣開啟狀態」 -> 有插電
+    @ac.ispower = true
+    # 冷氣遙控器.打開冷氣()
+    @acc.open
+    # 預期(冷氣狀態) == 運作中
+    expect(@ac.isopen).to eq(true)
+  end
 end
